@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julia Arngold — Social Media & Cultural Events</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ... (Keep your existing reset and root variables) ... */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #ffffff;
+  --off-white: #f8f7f5;
+  --light-gray: #f0eeeb;
+  --border: #e5e2dd;
+  --muted: #9a9590;
+  --text: #1c1a17;
+  --accent: #2a6049;
+  --accent-light: #e8f0ec;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--accent); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 56px; height: 68px;
+}
+.nav-name {
+  font-family: 'Lora', serif;
+  font-size: 17px; font-weight: 600;
+  color: var(--text); letter-spacing: -0.01em;
+}
+.nav-links { display: flex; gap: 40px; align-items: center; }
+.nav-links a {
+  text-decoration: none; color: var(--muted);
+  font-size: 13px; font-weight: 400; letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--text) !important;
+  color: white !important;
+  padding: 9px 22px;
+  border-radius: 100px;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--accent) !important; }
+/* HERO — CENTERED (Replace existing Hero CSS) */
+.hero {
+  padding-top: 68px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--off-white);
+  border-bottom: 1px solid var(--border);
+}
+.hero-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 100px 56px;
+  max-width: 780px;
+  width: 100%;
+}
+.hero-divider {
+  width: 40px; height: 1px;
+  background: var(--accent);
+  margin-bottom: 28px;
+  opacity: 0; animation: fadeIn 0.6s ease 0.6s forwards;
+}
+.hero-desc {
+  font-size: 15px; color: var(--muted);
+  max-width: 480px; line-height: 1.85;
+  margin-bottom: 48px; font-weight: 300;
+  opacity: 0; animation: fadeUp 0.6s ease 0.65s forwards;
+  margin-left: auto; margin-right: auto; /* Centers the paragraph */
+}
+
+.hero-photo-wrap {
+  width: 100%;
+  max-width: 420px; /* Controls the size of your picture */
+  position: relative;
+}
+.hero-photo-wrap img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+  opacity: 0; 
+  animation: fadeIn 1s ease 0.5s forwards;
+  display: block;
+}
+
+/* WORK REEL HEIGHT FIX */
+.reel-grid {
+  display: grid; 
+  grid-template-columns: 1fr 1fr;
+  gap: 1px; 
+  background: var(--border);
+  height: auto; 
+}
+.reel-grid iframe {
+  width: 100%; 
+  height: 580px; /* Fixed height for full portrait reels */
+  border: none; 
+  display: block;
+}
+
+/* Rest of your existing CSS (Section titles, About, Metrics, Contact) ... */
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 28px;
+  opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards;
+}
+.hero-tag-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+.hero-h1 {
+  font-family: 'Lora', serif;
+  font-size: clamp(44px, 5.5vw, 76px);
+  font-weight: 600; line-height: 1.1;
+  letter-spacing: -0.03em; margin-bottom: 10px;
+  opacity: 0; animation: fadeUp 0.6s ease 0.35s forwards;
+}
+.hero-h1 em { font-style: italic; color: var(--accent); }
+.hero-sub-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(22px, 2.5vw, 34px);
+  font-weight: 400; font-style: italic;
+  color: var(--muted); margin-bottom: 32px;
+  opacity: 0; animation: fadeUp 0.6s ease 0.5s forwards;
+}
+.hero-desc {
+  font-size: 15px; color: var(--muted);
+  max-width: 440px; line-height: 1.85;
+  margin-bottom: 48px; font-weight: 300;
+  opacity: 0; animation: fadeUp 0.6s ease 0.65s forwards;
+}
+.hero-desc strong { color: var(--text); font-weight: 500; }
+.hero-btns {
+  display: flex; gap: 12px;
+  opacity: 0; animation: fadeUp 0.6s ease 0.8s forwards;
+}
+.btn-dark {
+  background: var(--text); color: white;
+  padding: 13px 28px; border-radius: 100px;
+  font-size: 13px; font-weight: 500;
+  text-decoration: none; transition: background 0.2s;
+}
+.btn-dark:hover { background: var(--accent); }
+.btn-outline {
+  background: transparent; color: var(--text);
+  padding: 13px 28px; border-radius: 100px;
+  font-size: 13px; font-weight: 500;
+  text-decoration: none; border: 1px solid var(--border);
+  transition: border-color 0.2s;
+}
+.btn-outline:hover { border-color: var(--text); }
+
+.section-label {
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::before {
+  content: ''; display: inline-block;
+  width: 20px; height: 1px; background: var(--accent);
+}
+.section-h2 {
+  font-family: 'Lora', serif;
+  font-size: clamp(30px, 3.5vw, 48px);
+  font-weight: 600; line-height: 1.15;
+  letter-spacing: -0.02em; margin-bottom: 16px;
+}
+.section-h2 em { font-style: italic; color: var(--accent); }
+.section-desc {
+  font-size: 15px; color: var(--muted);
+  font-weight: 300; line-height: 1.85; max-width: 520px;
+}
+
+/* ABOUT — CENTERED (Replace existing About CSS) */
+#about {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 100px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.about-header { max-width: 640px; margin-bottom: 56px; }
+.about-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  max-width: 900px;
+  width: 100%;
+  margin-bottom: 56px;
+}
+.about-body-card { background: var(--white); padding: 40px 32px; text-align: left; }
+.about-body-card-title { font-family: 'Lora', serif; font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+.about-body-card-desc { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.8; }
+
+.about-photo {
+  width: 100%; aspect-ratio: 4/5;
+  object-fit: cover; object-position: center top;
+  margin-bottom: 32px;
+  border-radius: 4px;
+}
+.about-text { font-size: 15px; color: var(--muted); font-weight: 300; line-height: 1.9; }
+.about-text p + p { margin-top: 20px; }
+.about-text strong { color: var(--text); font-weight: 500; }
+.skills-wrap { margin-top: 40px; }
+.skills-title { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+.skills-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  background: var(--light-gray);
+  border: 1px solid var(--border);
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 12px; font-weight: 400; color: var(--text);
+  transition: all 0.2s;
+}
+.chip:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+
+#work { padding: 88px 56px; }
+.work-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+.work-header-right { font-size: 13px; color: var(--muted); max-width: 260px; text-align: right; line-height: 1.7; font-weight: 300; }
+
+.work-item {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--border);
+  margin-bottom: 2px;
+  transition: border-color 0.3s;
+}
+.work-item:hover { border-color: var(--accent); }
+.work-item.reverse { direction: rtl; }
+.work-item.reverse > * { direction: ltr; }
+.work-img-col { overflow: hidden; position: relative; min-height: 360px; }
+.work-img-col img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  display: block;
+}
+
+.work-info-col {
+  padding: 56px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--white);
+}
+.work-num {
+  font-family: 'Lora', serif;
+  font-size: 13px; color: var(--muted);
+  margin-bottom: 24px;
+}
+.work-title {
+  font-family: 'Lora', serif;
+  font-size: 26px; font-weight: 600;
+  line-height: 1.25; margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.work-org {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 24px;
+}
+.work-desc {
+  font-size: 14px; color: var(--muted);
+  font-weight: 300; line-height: 1.85; margin-bottom: 28px;
+}
+.work-points { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.work-points li {
+  font-size: 13px; color: var(--muted); font-weight: 300;
+  line-height: 1.6; padding-left: 18px; position: relative;
+}
+.work-points li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; }
+.work-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.work-tag {
+  background: var(--light-gray); border: 1px solid var(--border);
+  padding: 5px 12px; border-radius: 100px;
+  font-size: 11px; font-weight: 400; color: var(--muted);
+}
+
+.work-metrics {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+.work-metric {
+  background: var(--white);
+  padding: 16px 12px; text-align: center;
+}
+.work-metric-num {
+  font-family: 'Lora', serif;
+  font-size: 22px; font-weight: 600;
+  color: var(--accent); line-height: 1; margin-bottom: 4px;
+}
+.work-metric-label {
+  font-size: 10px; font-weight: 400;
+  color: var(--muted); letter-spacing: 0.04em; line-height: 1.4;
+}
+
+#events {
+  background: var(--off-white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 88px 56px;
+}
+.events-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+.events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.event-card {
+  background: var(--white);
+  overflow: hidden; transition: all 0.3s;
+}
+.event-card:hover .event-card-img img { transform: scale(1.05); }
+.event-card-img { overflow: hidden; aspect-ratio: 4/3; }
+.event-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+.event-card-body { padding: 28px 24px; }
+.event-card-label {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+}
+.event-card-title {
+  font-family: 'Lora', serif; font-size: 18px; font-weight: 600;
+  line-height: 1.3; margin-bottom: 10px;
+}
+.event-card-desc { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+#metrics {
+  padding: 88px 56px;
+  border-bottom: 1px solid var(--border);
+}
+.metrics-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+.metrics-top-right { font-size: 13px; color: var(--muted); max-width: 280px; text-align: right; line-height: 1.7; font-weight: 300; }
+.metrics-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+}
+.metric-card {
+  background: var(--white); padding: 48px 32px; text-align: center;
+  transition: background 0.3s;
+}
+.metric-card:hover { background: var(--accent-light); }
+.metric-num {
+  font-family: 'Lora', serif;
+  font-size: 52px; font-weight: 600;
+  color: var(--accent); line-height: 1; margin-bottom: 12px;
+}
+.metric-label {
+  font-size: 12px; font-weight: 400;
+  color: var(--muted); letter-spacing: 0.04em; line-height: 1.6;
+}
+
+#contact {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--border);
+  min-height: 60vh;
+}
+.contact-left {
+  padding: 88px 64px 88px 56px;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.contact-available {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent-light); color: var(--accent);
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 12px; font-weight: 500;
+  margin-bottom: 32px; width: fit-content;
+}
+.avail-dot {
+  width: 7px; height: 7px; background: var(--accent);
+  border-radius: 50%; animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.contact-heading {
+  font-family: 'Lora', serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 600; line-height: 1.1;
+  letter-spacing: -0.02em; margin-bottom: 20px;
+}
+.contact-heading em { font-style: italic; color: var(--accent); }
+.contact-desc { font-size: 15px; color: var(--muted); font-weight: 300; line-height: 1.85; max-width: 380px; }
+
+.contact-right {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 88px 56px 88px 64px;
+}
+.contact-links { display: flex; flex-direction: column; gap: 0; }
+.contact-link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0; border-bottom: 1px solid var(--border);
+  text-decoration: none; color: var(--text);
+  transition: all 0.2s; position: relative;
+}
+.contact-link:first-child { border-top: 1px solid var(--border); }
+.contact-link:hover { padding-left: 12px; }
+.contact-link:hover .contact-link-value { color: var(--accent); }
+.contact-link-label { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.contact-link-value { font-family: 'Lora', serif; font-size: 17px; font-weight: 400; transition: color 0.2s; }
+.contact-arrow { font-size: 18px; color: var(--muted); transition: all 0.2s; }
+.contact-link:hover .contact-arrow { color: var(--accent); transform: translateX(4px); }
+
+footer {
+  padding: 28px 56px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer span { font-size: 12px; color: var(--muted); }
+.footer-name { font-family: 'Lora', serif; font-size: 14px; color: var(--text); }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; } .d4 { transition-delay: 0.4s; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 56px 20px; border-right: none; }
+  .hero-right { min-height: 400px; padding: 40px 20px; }
+  #about { grid-template-columns: 1fr; }
+  .about-left { padding: 56px 20px; border-right: none; }
+  .about-right { padding: 56px 20px; }
+  #work { padding: 56px 20px; }
+  .work-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .work-header-right { text-align: left; }
+  .work-item { grid-template-columns: 1fr; }
+  .work-item.reverse { direction: ltr; }
+  .work-img-col { min-height: 260px; }
+  .work-info-col { padding: 36px 24px; }
+  .reel-grid { grid-template-columns: 1fr; }
+  .reel-grid iframe { height: 450px; }
+  #events { padding: 56px 20px; }
+  .events-top { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .events-grid { grid-template-columns: 1fr; }
+  #metrics { padding: 56px 20px; }
+  .metrics-top { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  #contact { grid-template-columns: 1fr; }
+  .contact-left { padding: 56px 20px; border-right: none; }
+  .contact-right { padding: 40px 20px 56px; }
+  footer { flex-direction: column; gap: 8px; text-align: center; padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">Julia Arngold</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#events">Events</a>
+    <a href="#metrics">Impact</a>
+    <a href="#contact" class="nav-cta">Contact</a>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-center">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> Social Media · Cultural Events</div>
+    <h1 class="hero-h1">Julia<br><em>Arngold</em></h1>
+    <p class="hero-sub-title">Content Strategist & Event Producer</p>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      I create content that <strong>performs</strong> and events that <strong>connect</strong>. From scripting and filming luxury real estate reels to organizing CIS cultural showcases.
+    </p>
+    <div class="hero-btns">
+      <a href="#work" class="btn-dark">View My Work</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-header reveal">
+    <p class="section-label centered">About Me</p>
+    <h2 class="section-h2">Strategy. <em>Story.</em> Scale.</h2>
+  </div>
+
+  <div class="about-text reveal d1" style="max-width: 640px; margin-bottom: 48px;">
+    <p>I'm a social media strategist and cultural event producer balancing creative vision with analytical precision. <strong>Twice named to the Dean's List</strong> at James Cook University.</p>
+    <p>In 2025, I was awarded <strong>Best Design Sprint Presentation</strong>, a framework I use to scale brands rapidly through high-impact content testing.</p>
+  </div>
+
+  <div class="about-body reveal d2">
+    <div class="about-body-card">
+      <div class="about-body-card-title">Content Strategy</div>
+      <p class="about-body-card-desc">End-to-end production—scripting, filming, and editing—at a 3+ posts per week cadence.</p>
+    </div>
+    <div class="about-body-card">
+      <div class="about-body-card-title">Event Production</div>
+      <p class="about-body-card-desc">Organizing international cultural showcases and large-scale community events.</p>
+    </div>
+    <div class="about-body-card">
+      <div class="about-body-card-title">Analytics & Growth</div>
+      <p class="about-body-card-desc">Optimizing reach to triple average reel views and grow engagement by 12%+.</p>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="work-item reveal">
+    <div class="work-img-col">
+      <div class="reel-grid">
+        <iframe src="https://www.instagram.com/p/DMHa1PdsFBV/embed/" allowfullscreen scrolling="no"></iframe>
+        <iframe src="https://www.instagram.com/reel/DGKcC7DvwW5/embed/" allowfullscreen scrolling="no"></iframe>
+        <iframe src="https://www.instagram.com/reel/DEEHOceMQZy/embed/" allowfullscreen scrolling="no"></iframe>
+        <iframe src="https://www.instagram.com/reel/DCyeS3uSFpX/embed/" allowfullscreen scrolling="no"></iframe>
+      </div>
+    </div>
+    <div class="work-info-col">
+      <div class="work-num">01 / 04</div>
+      <div class="work-title">Social Media Marketing Lead</div>
+      <div class="work-org">Student Marketers</div>
+      <p class="work-desc">Architected the content engine from zero — scripting, filming, and editing — before scaling the role into team leadership and strategic oversight.</p>
+      <ul class="work-points">
+        <li>Maintained a rigorous publishing cadence of 3+ posts per week.</li>
+        <li>Spearheaded full production end-to-end, from scripting to final edit.</li>
+        <li>Recruited and managed a creative team to execute large-scale campaigns.</li>
+        <li>Synthesized performance metrics to optimize reach and engagement.</li>
+      </ul>
+      <div class="work-tags">
+        <span class="work-tag">Content Strategy</span>
+        <span class="work-tag">Team Lead</span>
+        <span class="work-tag">Production</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="work-item reverse reveal">
+    <div class="work-info-col">
+      <div class="work-num">02 / 04</div>
+      <div class="work-title">Social Media Manager</div>
+      <div class="work-org">Luxury Real Estate</div>
+      <div class="work-metrics">
+        <div class="work-metric"><div class="work-metric-num">3,426</div><div class="work-metric-label">Avg. Views</div></div>
+        <div class="work-metric"><div class="work-metric-num">+85</div><div class="work-metric-label">New Followers</div></div>
+        <div class="work-metric"><div class="work-metric-num">+12%</div><div class="work-metric-label">Engagement</div></div>
+      </div>
+      <ul class="work-points">
+        <li>Tripled average reel views from 1,133 to 3,426 per video.</li>
+        <li>Produced 9 high-conversion videos solo using CapCut Pro.</li>
+        <li>Tailored luxury content specifically for high-net-worth audiences.</li>
+      </ul>
+    </div>
+    <div class="work-img-col">
+      <div class="reel-grid">
+        <iframe src="https://www.instagram.com/reel/DONk2Rhj7th/embed/" allowfullscreen scrolling="no"></iframe>
+        <iframe src="https://www.instagram.com/reel/DOF-5kKDw42/embed/" allowfullscreen scrolling="no"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="work-item reveal">
+    <div class="work-img-col">
+      <img src="personalbrand.jpg" alt="Personal Brand Strategy & Viral Content" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    <div class="work-info-col">
+      <div class="work-num">03 / 04</div>
+      <div class="work-title">Content Strategy Lab</div>
+      <div class="work-org">Personal Brand Project</div>
+      
+      <div class="work-metrics">
+        <div class="work-metric"><div class="work-metric-num">318K</div><div class="work-metric-label">Peak Reach</div></div>
+        <div class="work-metric"><div class="work-metric-num">High</div><div class="work-metric-label">Retention Rate</div></div>
+        <div class="work-metric"><div class="work-metric-num">Viral</div><div class="work-metric-label">Framework</div></div>
+      </div>
+
+      <p class="work-desc">
+        A continuous R&D project used to master <strong>viral mechanics</strong> and advanced editing. I translate emerging trends into high-performing digital assets by analyzing audience retention and engagement data.
+      </p>
+
+      <ul class="work-points">
+        <li>Built a viral-ready structure peaking at <strong>300,000+ views</strong> per video.</li>
+        <li>Developed a proprietary system for rapid idea generation, filming, and professional editing.</li>
+        <li>A/B tested content hooks to identify and leverage shifting TikTok algorithm patterns.</li>
+      </ul>
+
+      <div class="work-tags">
+        <span class="work-tag">Viral Mechanics</span>
+        <span class="work-tag">Trend Analysis</span>
+        <span class="work-tag">A/B Testing</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="work-item reverse reveal">
+    <div class="work-img-col">
+      <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 2px; height: 100%;">
+        <img src="SGN1.png" alt="SGN Creators Club Community" style="width: 100%; height: 100%; object-fit: cover;">
+        <img src="SGN2.png" alt="Singapore Global Network Event" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+    </div>
+    <div class="work-info-col">
+      <div class="work-num">04 / 04</div>
+      <div class="work-title">Creator Representative</div>
+      <div class="work-org">Singapore Global Network (SGN)</div>
+      
+      <div class="work-metrics">
+        <div class="work-metric"><div class="work-metric-num">EDB</div><div class="work-metric-label">Parent Body</div></div>
+        <div class="work-metric"><div class="work-metric-num">Global</div><div class="work-metric-label">Community</div></div>
+        <div class="work-metric"><div class="work-metric-num">Selected</div><div class="work-metric-label">Creator</div></div>
+      </div>
+
+      <p class="work-desc">
+        Selected to join the <strong>SGN Creators Club</strong>, a division of Singapore’s Economic Development Board. I act as a cultural bridge for the "In-Betweeners" community—expats navigating life between home and Singapore.
+      </p>
+
+      <ul class="work-points">
+        <li>Collaborating on content that builds a global community with Singapore at its heart.</li>
+        <li>Advocating for the "In-Betweener" experience through authentic cultural storytelling.</li>
+        <li>Partnering with a government-linked network to strengthen Singapore's international brand.</li>
+      </ul>
+
+      <div class="work-tags">
+        <span class="work-tag">Community Building</span>
+        <span class="work-tag">Cultural Advocacy</span>
+        <span class="work-tag">SGN Creators Club</span>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<section id="contact">
+  <div class="contact-left reveal">
+    <div class="contact-available"><div class="avail-dot"></div> Available for opportunities</div>
+    <h2 class="contact-heading">Let's Work<br><em>Together.</em></h2>
+  </div>
+  <div class="contact-right reveal d1">
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:arngold.juliaa@gmail.com">
+        <div><div class="contact-link-label">Email</div><div class="contact-link-value">arngold.juliaa@gmail.com</div></div>
+        <span class="contact-arrow">→</span>
+      </a>
+      <a class="contact-link" href="https://linkedin.com/in/juliaarngold" target="_blank">
+        <div><div class="contact-link-label">LinkedIn</div><div class="contact-link-value">linkedin.com/in/juliaarngold</div></div>
+        <span class="contact-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">Julia Arngold</span>
+  <span>© 2026</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
